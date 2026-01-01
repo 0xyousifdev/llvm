@@ -135,8 +135,8 @@ jobs:
           -DLLVM_ENABLE_ZLIB=OFF \
           -DLLVM_ENABLE_ZSTD=OFF \
           \
-          -DLLVM_BUILD_LLVM_DYLIB=OFF \
-          -DLLVM_BUILD_STATIC=ON \
+          -DLLVM_BUILD_LLVM_DYLIB=ON \
+          -DLLVM_BUILD_STATIC=OFF \
           \
           -DLLVM_TABLEGEN="$ROOTDIR/out/host/bin/llvm-tblgen" \
           -DCLANG_TABLEGEN="$ROOTDIR/out/host/bin/clang-tblgen" \
