@@ -90,12 +90,12 @@ jobs:
           cmake --build . --target install -- -j$(sysctl -n hw.logicalcpu)
 
     - name: Save LLVM host cache
-      id: cacha-llvm-host-save
+      id: cache-llvm-host-save
       if: always() && steps.cache-llvm-host.outputs.cache-hit != 'true'
       uses: actions/cache/save@v4
       with:
         key: ${{ steps.cache-llvm-host.outputs.cache-primary-key }}
-        path: out/llvm-build-host
+        path: out/build-llvm-host
     # -----------------------------
     # LLVM TARGET (iOS)
     # -----------------------------
