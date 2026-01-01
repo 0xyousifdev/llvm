@@ -114,6 +114,7 @@ jobs:
           -DCMAKE_MACOSX_BUNDLE=OFF \
           -DLLVM_ENABLE_LIBATOMIC=OFF \
           -DHAVE_CXX_ATOMICS_WITHOUT_LIB=ON \
+          -DHAVE_CXX_ATOMICS64_WITHOUT_LIB=ON \
           \
           -DCMAKE_C_FLAGS="-fno-sanitize=all -arch arm64" \
           -DCMAKE_CXX_FLAGS="-fno-sanitize=all -arch arm64" \
