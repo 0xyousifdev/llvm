@@ -29,8 +29,10 @@ jobs:
       with:
         path: out/build-llvm-host
         key: llvm-macOS-20.1.8-arm64-apple-ios-v1
-        restore-keys: llvm-macOS-20.1.8-arm64-apple-ios
-
+        restore-keys: |
+          llvm-macOS-20.1.8-arm64-apple-ios-v1
+          llvm-macOS-20.1.8-arm64-apple-ios-
+          
     - name: Install dependencies
       run: |
         brew install wget
