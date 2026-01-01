@@ -17,12 +17,16 @@ jobs:
 
     - name: Install dependencies
       run: |
-        brew install cmake ninja
+        brew install cmake ninja wget
 
     - name: Detect iOS SDK
       run: |
-        SDK_PATH=$(xcrun --sdk iphoneos --show-sdk-path)
-        echo "IOS_SDK=$SDK_PATH" >> $GITHUB_ENV
+        ROOTDIR="$(pwd)"
+        wget https://github.com/xybp888/iOS-SDKs/releases/download/iOS-SDKs/iPhoneOS16.1.sdk.zip
+        unzip iPhoneOS16.1.sdk.zip
+        SDK_PATH="$ROOTDIR/iPhoneOS16.1.sdk 
+        echo "$SDK_PATH" >> $GITHUB_ENV
+        
 
     - name: LLVM host
       run: |
@@ -33,6 +37,7 @@ jobs:
           -DCMAKE_INSTALL_PREFIX="$ROOTDIR/out/host" \
           -DCMAKE_PREFIX_PATH="$ROOTDIR/out/host" \
           -DCMAKE_BUILD_TYPE=Release \
+          -DLLVM_TARGETS_TO_BUILD="AArch64" 
           -DLLVM_ENABLE_BINDINGS=OFF \
           -DLLVM_ENABLE_LIBEDIT=OFF \
           -DLLVM_ENABLE_LIBPFM=OFF \
@@ -64,7 +69,7 @@ jobs:
 
     - name: LLVM Target
       run: | 
-        TARGET="aarch64-ios-none"
+        TARGET="arm64-apple-ios"
         MCPU="baseline"
         TARGET_OS_CMAKE="iOS"
         ROOTDIR="$(pwd)"
@@ -77,9 +82,9 @@ jobs:
           -DCMAKE_CROSSCOMPILING=True \
           -DCMAKE_SYSTEM_NAME="$TARGET_OS_CMAKE" \
           -DCMAKE_OSX_SYSROOT=$SDK_PATH \
-          -DCMAKE_C_COMPILER="cc;-fno-sanitize=all;-s;-target;$TARGET;-mcpu=$MCPU" \
-          -DCMAKE_CXX_COMPILER="c++;-fno-sanitize=all;-s;-target;$TARGET;-mcpu=$MCPU" \
-          -DCMAKE_ASM_COMPILER="cc;-fno-sanitize=all;-s;-target;$TARGET;-mcpu=$MCPU" \
+          -DCMAKE_C_FLAGS="-fno-sanitize=all;-s;-target;$TARGET;-mcpu=$MCPU" \
+          -DCMAKE_CXX_FLAGS="-fno-sanitize=all;-s;-target;$TARGET;-mcpu=$MCPU" \
+          -DCMAKE_ASM_FLAGS="-fno-sanitize=all;-s;-target;$TARGET;-mcpu=$MCPU" \
           -DCMAKE_LINK_DEPENDS_USE_LINKER=OFF \
           -DCMAKE_RC_COMPILER="$ROOTDIR/out/host/bin/llvm-rc" \
           -DCMAKE_AR="$ROOTDIR/out/host/bin/llvm-ar" \
@@ -88,7 +93,9 @@ jobs:
           -DLLVM_ENABLE_ZLIB=FORCE_ON \
           -DLLVM_ENABLE_ZSTD=FORCE_ON \
           -DLLVM_USE_STATIC_ZSTD=ON \
+          -DLLVM_BUILD_LLVM_DYLIB=ON \
           -DLLVM_TABLEGEN="$ROOTDIR/out/host/bin/llvm-tblgen" \
+          -DCLANG_TABLEGEN="$ROOTDIR/out/host/bin/clang-tblgen" \
           -DLLVM_BUILD_STATIC=ON \
           -DLLVM_DEFAULT_TARGET_TRIPLE="$TARGET"
         cmake --build . --target install -- -j$(sysctl -n hw.logicalcpu)
@@ -98,4 +105,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: llvm-clang-lld-ios
-        path: $ROOTDIR/out/$TARGET-$MCPU
+        path: out/arm64-apple-ios*
