@@ -37,7 +37,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        brew install cmake ninja wget
+        brew install wget
 
     # -----------------------------
     # Download iOS SDK (Procursus)
@@ -108,6 +108,8 @@ jobs:
           -DCMAKE_SYSTEM_NAME=iOS \
           -DCMAKE_CROSSCOMPILING=TRUE \
           -DCMAKE_OSX_SYSROOT="$SDK_PATH" \
+          -DLLVM_TARGETS_TO_BUILD="AArch64" \
+          -DCMAKE_MACOSX_BUNDLE=OFF \
           \
           -DCMAKE_C_FLAGS="-fno-sanitize=all -s -target $TARGET" \
           -DCMAKE_CXX_FLAGS="-fno-sanitize=all -s -target $TARGET" \
