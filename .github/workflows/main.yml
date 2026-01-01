@@ -30,8 +30,8 @@ jobs:
         path: |
           out/build-llvm-host
           out/host
-          out/build-llvm-${{ env.TARGET }}-${{ env.MCPU }}
         key: llvm-${{ runner.os }}-${{ env.LLVM_VERSION }}-${{ env.TARGET }}-${{ env.CACHE_VERSION }}
+        save-always: true
         restore-keys: |
           llvm-${{ runner.os }}-${{ env.LLVM_VERSION }}-${{ env.TARGET }}-
 
