@@ -25,14 +25,12 @@ jobs:
     # Cache LLVM builds (host + iOS)
     # -----------------------------
     - name: Restore LLVM host cache
-      uses: actions/cache@v4
+      id: cache-llvm-host
+      uses: actions/cache/restore@v4
       with:
         path: out/build-llvm-host
-        key: llvm-macOS-20.1.8-arm64-apple-ios-v1
-        restore-keys: |
-          llvm-macOS-20.1.8-arm64-apple-ios-v1
-          llvm-macOS-20.1.8-arm64-apple-ios-
-          
+        key: ${{ runner.os }}-llvm-host
+        
     - name: Install dependencies
       run: |
         brew install wget
@@ -92,11 +90,12 @@ jobs:
           cmake --build . --target install -- -j$(sysctl -n hw.logicalcpu)
 
     - name: Save LLVM host cache
-      uses: actions/cache@v4
+      id: cacha-llvm-host-save
+      if: always() && steps.cache-llvm-host.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
       with:
-        path: out/build-llvm-host
-        key: llvm-macOS-20.1.8-arm64-apple-ios-v1
-
+        key: ${{ steps.cache-llvm-host.outputs.cache-primary-key }}
+        path: out/llvm-build-host
     # -----------------------------
     # LLVM TARGET (iOS)
     # -----------------------------
