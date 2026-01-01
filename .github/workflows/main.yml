@@ -94,6 +94,7 @@ jobs:
           -DLLVM_ENABLE_ZSTD=FORCE_ON \
           -DLLVM_USE_STATIC_ZSTD=ON \
           -DLLVM_BUILD_LLVM_DYLIB=ON \
+          -DLLVM_BUILD_STATIC=OFF \
           -DLLVM_TABLEGEN="$ROOTDIR/out/host/bin/llvm-tblgen" \
           -DCLANG_TABLEGEN="$ROOTDIR/out/host/bin/clang-tblgen" \
           -DLLVM_DEFAULT_TARGET_TRIPLE="$TARGET"
