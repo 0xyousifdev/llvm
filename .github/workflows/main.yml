@@ -67,6 +67,7 @@ jobs:
         TARGET="aarch64-ios-none"
         MCPU="baseline"
         TARGET_OS_CMAKE="iOS"
+        ROOTDIR="$(pwd)"
         mkdir -p "$ROOTDIR/out/build-llvm-$TARGET-$MCPU"
         cd "$ROOTDIR/out/build-llvm-$TARGET-$MCPU"
         cmake -G Ninja "$ROOTDIR/llvm" \
@@ -76,9 +77,9 @@ jobs:
           -DCMAKE_CROSSCOMPILING=True \
           -DCMAKE_SYSTEM_NAME="$TARGET_OS_CMAKE" \
           -DCMAKE_OSX_SYSROOT=$SDK_PATH \
-          -DCMAKE_C_COMPILER="$ZIG;cc;-fno-sanitize=all;-s;-target;$TARGET;-mcpu=$MCPU" \
-          -DCMAKE_CXX_COMPILER="$ZIG;c++;-fno-sanitize=all;-s;-target;$TARGET;-mcpu=$MCPU" \
-          -DCMAKE_ASM_COMPILER="$ZIG;cc;-fno-sanitize=all;-s;-target;$TARGET;-mcpu=$MCPU" \
+          -DCMAKE_C_COMPILER="cc;-fno-sanitize=all;-s;-target;$TARGET;-mcpu=$MCPU" \
+          -DCMAKE_CXX_COMPILER="c++;-fno-sanitize=all;-s;-target;$TARGET;-mcpu=$MCPU" \
+          -DCMAKE_ASM_COMPILER="cc;-fno-sanitize=all;-s;-target;$TARGET;-mcpu=$MCPU" \
           -DCMAKE_LINK_DEPENDS_USE_LINKER=OFF \
           -DCMAKE_RC_COMPILER="$ROOTDIR/out/host/bin/llvm-rc" \
           -DCMAKE_AR="$ROOTDIR/out/host/bin/llvm-ar" \
