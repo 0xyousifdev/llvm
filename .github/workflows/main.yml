@@ -112,6 +112,7 @@ jobs:
           -DCMAKE_OSX_SYSROOT="$SDK_PATH" \
           -DLLVM_TARGETS_TO_BUILD="AArch64" \
           -DCMAKE_MACOSX_BUNDLE=OFF \
+          -DLLVM_ENABLE_LIBATOMIC=OFF \
           \
           -DCMAKE_C_FLAGS="-fno-sanitize=all -arch arm64" \
           -DCMAKE_CXX_FLAGS="-fno-sanitize=all -arch arm64" \
