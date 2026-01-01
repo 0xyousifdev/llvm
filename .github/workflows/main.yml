@@ -82,9 +82,9 @@ jobs:
           -DCMAKE_CROSSCOMPILING=True \
           -DCMAKE_SYSTEM_NAME="$TARGET_OS_CMAKE" \
           -DCMAKE_OSX_SYSROOT=$SDK_PATH \
-          -DCMAKE_C_FLAGS="-fno-sanitize=all -s -target $TARGET -mcpu=$MCPU" \
-          -DCMAKE_CXX_FLAGS="-fno-sanitize=all -s -target $TARGET -mcpu=$MCPU" \
-          -DCMAKE_ASM_FLAGS="-fno-sanitize=all -s -target $TARGET -mcpu=$MCPU" \
+          -DCMAKE_C_FLAGS="-fno-sanitize=all -s -target $TARGET" \
+          -DCMAKE_CXX_FLAGS="-fno-sanitize=all -s -target $TARGET" \
+          -DCMAKE_ASM_FLAGS="-fno-sanitize=all -s -target $TARGET" \
           -DCMAKE_LINK_DEPENDS_USE_LINKER=OFF \
           -DCMAKE_RC_COMPILER="$ROOTDIR/out/host/bin/llvm-rc" \
           -DCMAKE_AR="$ROOTDIR/out/host/bin/llvm-ar" \
