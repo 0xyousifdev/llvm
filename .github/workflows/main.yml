@@ -130,6 +130,10 @@ jobs:
           -DLLVM_ENABLE_TERMINFO=OFF \
           -DLLVM_ENABLE_LIBEDIT=OFF \
           -DLLVM_ENABLE_BACKTRACES=OFF \
+          -DLLVM_ENABLE_LTO=THIN \
+		      -DLLVM_BUILD_LLVM_DYLIB=ON \
+		      -DLLVM_LINK_LLVM_DYLIB=ON \
+		      -DCLANG_LINK_CLANG_DYLIB=ON \
           \
           -DLLVM_INCLUDE_TESTS=OFF \
           -DLLVM_INCLUDE_EXAMPLES=OFF \
@@ -139,7 +143,6 @@ jobs:
           -DLLVM_ENABLE_ZLIB=OFF \
           -DLLVM_ENABLE_ZSTD=OFF \
           \
-          -DLLVM_BUILD_LLVM_DYLIB=ON \
           -DLLVM_BUILD_STATIC=OFF \
           \
           -DLLVM_TABLEGEN="$ROOTDIR/out/host/bin/llvm-tblgen" \
