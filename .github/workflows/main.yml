@@ -123,7 +123,7 @@ jobs:
           -DLLVM_ENABLE_PROJECTS="clang;lld" \
           -DLLVM_DEFAULT_TARGET_TRIPLE="$TARGET" \
           \
-          -DLLVM_INCLUDE_TOOLS=ON \
+          -DLLVM_INCLUDE_TOOLS=OFF \
           -DLLVM_BUILD_TOOLS=ON \
           -DLLVM_INCLUDE_UTILS=ON \
           -DLLVM_ENABLE_LIBXML2=OFF \
