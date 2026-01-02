@@ -9,7 +9,7 @@ jobs:
 
     env:
       LLVM_VERSION: 20.1.8
-      TARGET: aarch64-ios-none
+      TARGET: arm64-apple-ios16.0
       MCPU: baseline
       CACHE_VERSION: v1
 
