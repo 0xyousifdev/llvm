@@ -144,6 +144,7 @@ jobs:
           -DCMAKE_RANLIB="$ROOTDIR/out/host/bin/llvm-ranlib"
           
         sed -i '' 's/-Wl,--gc-sections//g' build.ninja
+        sed -i '' 's/-Wl,-z,defs//g' build.ninja
         cmake --build . --target install -- -j$(sysctl -n hw.logicalcpu)
 
     # -----------------------------
