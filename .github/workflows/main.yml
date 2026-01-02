@@ -136,7 +136,6 @@ jobs:
           -DLLVM_ENABLE_BACKTRACES=OFF \
           -DLLVM_ENABLE_LTO=THIN \
           -DLLVM_BUILD_LLVM_DYLIB=ON \
-          -DLLVM_LINK_LLVM_DYLIB=ON \
           -DLLVM_ENABLE_RTTI=ON \
           -DLLVM_ENABLE_EH=ON \
           -DLLVM_INCLUDE_TESTS=OFF \
