@@ -145,8 +145,8 @@ jobs:
           -DCLANG_TABLEGEN="$ROOTDIR/out/host/bin/clang-tblgen" \
           -DCMAKE_AR="$ROOTDIR/out/host/bin/llvm-ar" \
           -DCMAKE_RANLIB="$ROOTDIR/out/host/bin/llvm-ranlib"
-        sed -i 's/-Wl,--gc-sections//g' CMakeFiles/llvm-tblgen.dir/link.txt
-        sed -i 's/-Wl,--gc-sections//g' build.ninja
+        sed -i '' 's/-Wl,--gc-sections//g' CMakeFiles/llvm-tblgen.dir/link.txt
+        sed -i '' 's/-Wl,--gc-sections//g' build.ninja
         cmake --build . --target install -- -j$(sysctl -n hw.logicalcpu)
 
     # -----------------------------
