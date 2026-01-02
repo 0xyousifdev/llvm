@@ -160,6 +160,9 @@ jobs:
         sed -i '' 's/--version-script[^ ]*//g' build.ninja
         sed -i '' 's/--whole-archive//g' build.ninja
         sed -i '' 's/--no-whole-archive//g' build.ninja
+        sed -i '' 's/-Wl,[[:space:]]*/ /g' build.ninja
+        sed -i '' 's/-Wl,,*/ /g' build.ninja
+        sed -i '' 's/[[:space:]]\+/ /g' build.ninja
         cmake --build . --target install -- -j$(sysctl -n hw.logicalcpu)
 
     # -----------------------------
