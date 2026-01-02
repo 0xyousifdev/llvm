@@ -39,10 +39,10 @@ jobs:
     - name: Prepare iOS SDK
       run: |
         ROOTDIR="$(pwd)"
-        if [ ! -d "iPhoneOS16.1.sdk" ]; then
-          wget -q https://github.com/xybp888/iOS-SDKs/releases/download/iOS-SDKs/iPhoneOS16.1.sdk.zip
-          unzip -q iPhoneOS16.1.sdk.zip
-        fi
+
+        wget -q https://github.com/xybp888/iOS-SDKs/releases/download/iOS-SDKs/iPhoneOS16.1.sdk.zip
+        unzip -q iPhoneOS16.1.sdk.zip
+        
         echo "SDK_PATH=$ROOTDIR/iPhoneOS16.1.sdk" >> $GITHUB_ENV
 
     # -----------------------------
