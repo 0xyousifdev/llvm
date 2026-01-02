@@ -154,6 +154,10 @@ jobs:
           
         sed -i '' 's/-Wl,--gc-sections//g' build.ninja
         sed -i '' 's/-Wl,-z,defs//g' build.ninja
+        sed -i '' 's/-Bsymbolic-functions//g' build.ninja
+        sed -i '' 's/--version-script[^ ]*//g' build.ninja
+        sed -i '' 's/--whole-archive//g' build.ninja
+        sed -i '' 's/--no-whole-archive//g' build.ninja
         cmake --build . --target install -- -j$(sysctl -n hw.logicalcpu)
 
     # -----------------------------
