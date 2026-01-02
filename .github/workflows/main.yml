@@ -117,7 +117,7 @@ jobs:
           -DLLVM_ENABLE_LIBATOMIC=OFF \
           -DHAVE_CXX_ATOMICS_WITHOUT_LIB=ON \
           -DHAVE_CXX_ATOMICS64_WITHOUT_LIB=ON \
-          CMAKE_OSX_DEPLOYMENT_TARGET="16.0" \
+          -DCMAKE_OSX_DEPLOYMENT_TARGET="16.0" \
           \
           -DCMAKE_C_FLAGS="-fno-sanitize=all -arch arm64" \
           -DCMAKE_CXX_FLAGS="-fno-sanitize=all -arch arm64" \
@@ -138,7 +138,7 @@ jobs:
           -DLLVM_ENABLE_LIBEDIT=OFF \
           -DLLVM_ENABLE_BACKTRACES=OFF \
           -DLLVM_ENABLE_LTO=THIN \
-          -DLLVM_BUILD_LLVM_DYLIB=ON \
+          -DLLVM_BUILD_LLVM_DYLIB=OFF \
           -DLLVM_ENABLE_RTTI=ON \
           -DLLVM_ENABLE_EH=ON \
           -DLLVM_INCLUDE_TESTS=OFF \
@@ -147,7 +147,7 @@ jobs:
           -DLLVM_INCLUDE_DOCS=OFF \
           -DLLVM_ENABLE_ZLIB=OFF \
           -DLLVM_ENABLE_ZSTD=OFF \
-          -DLLVM_BUILD_STATIC=OFF \
+          -DLLVM_BUILD_STATIC=ON \
           -DLLVM_TABLEGEN="$ROOTDIR/out/host/bin/llvm-tblgen" \
           -DCLANG_TABLEGEN="$ROOTDIR/out/host/bin/clang-tblgen" \
           -DCMAKE_AR="$ROOTDIR/out/host/bin/llvm-ar" \
