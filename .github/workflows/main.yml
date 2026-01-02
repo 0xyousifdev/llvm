@@ -38,13 +38,15 @@ jobs:
     # -----------------------------
     - name: Prepare iOS SDK
       run: |
-        ROOTDIR="$(pwd)"
+        SDK=$(xcrun --sdk iphoneos --show-sdk-path)
+        echo "SDK_PATH=$SDK" >> $GITHUB_ENV
 
-        wget -q https://github.com/xybp888/iOS-SDKs/releases/download/iOS-SDKs/iPhoneOS16.1.sdk.zip
-        unzip -q iPhoneOS16.1.sdk.zip
+    #ROOTDIR="$(pwd)"
+
+    #wget -q https://github.com/xybp888/iOS-SDKs/releases/download/iOS-SDKs/iPhoneOS16.1.sdk.zip
+    #unzip -q iPhoneOS16.1.sdk.zip
         
-        echo "SDK_PATH=$ROOTDIR/iPhoneOS16.1.sdk" >> $GITHUB_ENV
-
+     
     # -----------------------------
     # LLVM HOST (macOS tools only)
     # -----------------------------
@@ -115,6 +117,7 @@ jobs:
           -DLLVM_ENABLE_LIBATOMIC=OFF \
           -DHAVE_CXX_ATOMICS_WITHOUT_LIB=ON \
           -DHAVE_CXX_ATOMICS64_WITHOUT_LIB=ON \
+          CMAKE_OSX_DEPLOYMENT_TARGET="16.0" \
           \
           -DCMAKE_C_FLAGS="-fno-sanitize=all -arch arm64" \
           -DCMAKE_CXX_FLAGS="-fno-sanitize=all -arch arm64" \
