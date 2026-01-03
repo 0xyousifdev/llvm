@@ -160,7 +160,7 @@ jobs:
         sed -i '' 's/-Wl,-z,defs//g' build.ninja
         sed -i '' 's/-Xlinker//g' build.ninja
         sed -i '' 's/-Bsymbolic-functions//g' build.ninja
-        sed -i '' 's/-Wl,--version-script,/Users/runner/work/llvm/llvm/out/build-llvm-arm64-apple-ios16.0-baseline/./lib/tools/llvm-shlib/simple_version_script.map//g' build.ninja
+        sed -i '' 's|-Wl,--version-script,/Users/runner/work/llvm/llvm/out/build-llvm-arm64-apple-ios16.0-baseline/./lib/tools/llvm-shlib/simple_version_script.map||g' build.ninja
         sed -i '' 's/-Wl,--whole-archive//g' build.ninja
         sed -i '' 's/-Wl,--no-whole-archive//g' build.ninja
         
