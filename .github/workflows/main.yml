@@ -30,9 +30,17 @@ jobs:
       with:
         path: out/host
         key: ${{ runner.os }}-llvm20-host
-        
-  
 
+    - name: Restore LLVM host cache
+      id: cache-llvm-target
+      uses: actions/cache/restore@v4
+      with:
+        path: out/arm64-apple-ios16.0-baseline
+        key: ${{ runner.os }}-llvm20-target
+        
+    - name: install zig
+      run: |
+        brew install zig
     # -----------------------------
     # Download iOS SDK (Procursus)
     # -----------------------------
@@ -100,6 +108,7 @@ jobs:
     # LLVM TARGET (iOS)
     # -----------------------------
     - name: Build LLVM for iOS
+      if: steps.cache-llvm-target.outputs.cache-hit != 'true'
       run: |
         ROOTDIR="$(pwd)"
         mkdir -p "$ROOTDIR/out/build-llvm-$TARGET-$MCPU"
@@ -163,16 +172,36 @@ jobs:
         sed -i '' 's/-Wl,--no-whole-archive//g' build.ninja
         
         cmake --build . --target install -- -j$(sysctl -n hw.logicalcpu) 
-      #sed -i '' 's/-Wl,--gc-sections//g' build.ninja
-      #sed -i '' 's/-Wl,-z,defs//g' build.ninja
-      #sed -i '' 's/-Bsymbolic-functions//g' build.ninja
-      #sed -i '' 's/--version-script[^ ]*//g' build.ninja
-      #sed -i '' 's/--whole-archive//g' build.ninja
-      #sed -i '' 's/--no-whole-archive//g' build.ninja
-      #sed -i '' 's/-Wl,[[:space:]]*/ /g' build.ninja
-      #sed -i '' 's/-Wl,,*/ /g' build.ninja
-      #sed -i '' 's/[[:space:]]\+/ /g' build.ninja
+
+    - name: Save LLVM target cache
+      id: cache-llvm-target-save
+      if: always() && steps.cache-llvm-target.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        key: ${{ steps.cache-llvm-target.outputs.cache-primary-key }}
+        path: out/arm64-apple-ios16.0-baseline
+
         
+    - name: zig build
+      run: |
+        wget https://ziglang.org/download/0.15.2/zig-0.15.2.tar.xz
+        tar -xf zig0.15.2.tar.xz --strip-components=1 -C zig
+        cd zig
+        zig build \
+         --prefix "$ROOTDIR/out/zig-$TARGET-$MCPU" \
+         --search-prefix "$ROOTDIR/out/$TARGET-$MCPU" \
+         --sysroot "$SDK_PATH" \
+         --maxrss 10000000000 \
+         -Dflat \
+         -Dstatic-llvm \
+         -Doptimize=ReleaseFast \
+         -Dstrip \
+         -Dtarget=aarch64-ios.15.0 \
+         -Dcpu="$MCPU" \
+         -Dversion-string="0.15.2" \
+         -j$(sysctl -n hw.logicalcpu)
+      
+         
 
     # -----------------------------
     # Upload artifact
