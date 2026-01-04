@@ -41,6 +41,8 @@ jobs:
     - name: install zig
       run: |
         brew install zig cmake
+        which cmake
+        cmake --version
     # -----------------------------
     # Download iOS SDK (Procursus)
     # -----------------------------
