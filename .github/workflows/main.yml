@@ -238,7 +238,6 @@ jobs:
         mkdir build && cd build 
         cmake .. \
           -DCMAKE_INSTALL_PREFIX="$ROOTDIR/out/zig-$TARGET-$MCPU" \
-          -DCMAKE_PREFIX_PATH="$ROOTDIR/out/$TARGET-$MCPU" \
           -DCMAKE_OSX_SYSROOT="$SDK_PATH" \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_SYSTEM_NAME=iOS
