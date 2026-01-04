@@ -235,19 +235,15 @@ jobs:
         mkdir zig
         tar -xf zig-0.15.2.tar.xz --strip-components=1 -C zig
         cd zig
-        zig build \
-         --prefix "$ROOTDIR/out/zig-$TARGET-$MCPU" \
-         --search-prefix "$ROOTDIR/out/$TARGET-$MCPU" \
-         --search-prefix "$SDK_PATH" \
-         --maxrss 10000000000 \
-         -Dflat \
-         -Dstatic-llvm \
-         -Doptimize=ReleaseFast \
-         -Dstrip \
-         -Dtarget=aarch64-ios.15.0 \
-         -Dcpu="$MCPU" \
-         -Dversion-string="0.15.2" \
-         -j$(sysctl -n hw.logicalcpu)
+        mkdir build && cd build 
+        cmake .. \
+          -DCMAKE_INSTALL_PREFIX="$ROOTDIR/out/zig-$TARGET-$MCPU" \
+          -DCMAKE_PREFIX_PATH="$ROOTDIR/out/$TARGET-$MCPU" \
+          -DCMAKE_OSX_SYSROOT="$SDK_PATH" \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_SYSTEM_NAME=iOS
+        cmake --build . --target install -- -j$(sysctl -n hw.logicalcpu)
+          
       
          
 
