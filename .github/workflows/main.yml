@@ -194,6 +194,8 @@ jobs:
          --search-prefix "$ROOTDIR/out/$TARGET-$MCPU" \
          --search-prefix "$SDK_PATH" \
          --maxrss 10000000000 \
+         -DZIG_ENABLE_ZLIB=OFF \
+         -DZIG_ENABLE_ZSTD=OFF \
          -Dflat \
          -Dstatic-llvm \
          -Doptimize=ReleaseFast \
