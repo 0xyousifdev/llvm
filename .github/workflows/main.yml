@@ -209,5 +209,5 @@ jobs:
     - name: Upload LLVM iOS toolchain
       uses: actions/upload-artifact@v4
       with:
-        name: llvm-clang-lld-ios
-        path: out/arm64-apple-ios*
+        name: zig
+        path: out/zig*
