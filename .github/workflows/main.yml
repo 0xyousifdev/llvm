@@ -230,6 +230,8 @@ jobs:
         
     - name: zig build
       run: |
+        llvm-config --help
+        which llvm-config
         ROOTDIR="$(pwd)"
         wget https://ziglang.org/download/0.15.2/zig-0.15.2.tar.xz
         mkdir zig
