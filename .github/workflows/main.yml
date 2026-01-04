@@ -184,6 +184,7 @@ jobs:
         
     - name: zig build
       run: |
+        ROOTDIR="$(pwd)"
         wget https://ziglang.org/download/0.15.2/zig-0.15.2.tar.xz
         mkdir zig
         tar -xf zig-0.15.2.tar.xz --strip-components=1 -C zig
