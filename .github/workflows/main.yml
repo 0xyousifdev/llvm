@@ -40,7 +40,7 @@ jobs:
         
     - name: install zig
       run: |
-        brew install zig
+        brew install zig cmake
     # -----------------------------
     # Download iOS SDK (Procursus)
     # -----------------------------
