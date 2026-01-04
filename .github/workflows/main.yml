@@ -180,7 +180,35 @@ jobs:
       with:
         key: ${{ steps.cache-llvm-target.outputs.cache-primary-key }}
         path: out/arm64-apple-ios16.0-baseline
+        
+    - name: zlib build
+      run: |
+        ROOTDIR="$(pwd)"
+        mkdir zlib
+        wget https://zlib.net/fossils/zlib-1.2.11.tar.gz
+        tar -xf zlib-1.2.11.tar.gz --strip-components=1 -C zlib
+        cd zlib 
+        mkdir build && cd build
+        cmake .. \
+          -DCMAKE_INSTALL_PREFIX="$ROOTDIR/out/$TARGET-$MCPU" \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_SYSTEM_NAME=iOS \
+          -DCMAKE_OSX_SYSROOT="$SDK_PATH"
+        cmake --build . --target install -- -j$(sysctl -n hw.logicalcpu) 
 
+    - name: zstd build
+      run: |
+        ROOTDIR="$(pwd)"
+        mkdir zstd
+        wget https://github.com/facebook/zstd/releases/download/v1.5.7/zstd-1.5.7.tar.gz
+        tar -xf zstd-1.5.7.tar.gz --strip-components=1 -C zstd
+        cd zstd
+        cmake -S . -B build-cmake \
+          -DCMAKE_INSTALL_PREFIX="$ROOTDIR/out/$TARGET-$MCPU" \
+          -DCMAKE_SYSTEM_NAME=iOS \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_OSX_SYSROOT="$SDK_PATH"
+        cmake --build build-cmake --target install -- -j$(sysctl -n hw.logicalcpu) 
         
     - name: zig build
       run: |
@@ -194,8 +222,6 @@ jobs:
          --search-prefix "$ROOTDIR/out/$TARGET-$MCPU" \
          --search-prefix "$SDK_PATH" \
          --maxrss 10000000000 \
-         -DZIG_ENABLE_ZLIB=OFF \
-         -DZIG_ENABLE_ZSTD=OFF \
          -Dflat \
          -Dstatic-llvm \
          -Doptimize=ReleaseFast \
