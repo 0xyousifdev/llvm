@@ -192,6 +192,7 @@ jobs:
         zig build \
          --prefix "$ROOTDIR/out/zig-$TARGET-$MCPU" \
          --search-prefix "$ROOTDIR/out/$TARGET-$MCPU" \
+         --search-prefix "$SDK_PATH" \
          --maxrss 10000000000 \
          -Dflat \
          -Dstatic-llvm \
